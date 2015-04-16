@@ -21,6 +21,6 @@
   },
   "endpoint": "https://github.com/triarc/cirrus-tlRemoteDataStore.git",
   "dependencies": {
-    "cirrus-tlDataServices": "~0.0.6"
+    "cirrus-tlDataServices": "~0.0.9"
   }
 }

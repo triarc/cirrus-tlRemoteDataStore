@@ -55,11 +55,12 @@ declare module Triarc.RemoteDataStore {
     class RemoteDataStore {
         private $http;
         private $q;
+        private $requestSender;
         static serviceId: string;
         static $inject: string[];
         private _dataStorage;
         private _transactions;
-        constructor($http: ng.IHttpService, $q: ng.IQService);
+        constructor($http: ng.IHttpService, $q: ng.IQService, $requestSender: any);
         get<T>(dataRequest: Triarc.Data.DataRequest<T>, getOptions?: IGetOptions<T>): ng.IPromise<Triarc.Data.DataResponse<T>>;
         getLocal<T>(dataRequest: Triarc.Data.DataRequest<T>): IStorageItem<T>;
         removeLocal<T>(dataRequest: Data.DataRequest<T>): any;

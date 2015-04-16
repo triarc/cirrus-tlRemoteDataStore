@@ -78,9 +78,10 @@ var Triarc;
         })(_RemoteDataStore.DataStorageType || (_RemoteDataStore.DataStorageType = {}));
         var DataStorageType = _RemoteDataStore.DataStorageType;
         var RemoteDataStore = (function () {
-            function RemoteDataStore($http, $q) {
+            function RemoteDataStore($http, $q, $requestSender) {
                 this.$http = $http;
                 this.$q = $q;
+                this.$requestSender = $requestSender;
                 this._transactions = [];
                 this._dataStorage = new LocalDataStorage();
             }
@@ -96,7 +97,7 @@ var Triarc;
                 var startTime = new Date();
                 var storageItem = this.getLocal(dataRequest);
                 if (storageItem == null) {
-                    var reqPromise = Triarc.Data.requestValue(dataRequest);
+                    var reqPromise = this.$requestSender.requestValue(dataRequest);
                     return this.updateStore(dataRequest, reqPromise).then(function (r) {
                         _this._transactions.push({
                             dataRequest: dataRequest,
@@ -113,7 +114,7 @@ var Triarc;
                     var response = new Triarc.Data.DataResponse(storageItem.data, 0 /* Success */);
                     defer.resolve(response);
                     // todo start triggering update
-                    var reqPromise = Triarc.Data.requestValue(dataRequest);
+                    var reqPromise = this.$requestSender.requestValue(dataRequest);
                     this._transactions.push({
                         dataRequest: dataRequest,
                         ended: new Date(),
@@ -194,7 +195,7 @@ var Triarc;
                 this._dataStorage.set(key, storageItem);
             };
             RemoteDataStore.serviceId = "$remoteData";
-            RemoteDataStore.$inject = ["$http", "$q"];
+            RemoteDataStore.$inject = ["$http", "$q", "$requestSender"];
             return RemoteDataStore;
         })();
         _RemoteDataStore.RemoteDataStore = RemoteDataStore;
