@@ -1,7 +1,7 @@
 var Triarc;
 (function (Triarc) {
     var RemoteDataStore;
-    (function (_RemoteDataStore) {
+    (function (RemoteDataStore_1) {
         "use strict";
         var LocalDataStorage = (function () {
             function LocalDataStorage() {
@@ -29,6 +29,7 @@ var Triarc;
                     this.addNew(key, storageItem);
                 }
                 else {
+                    // todo implement update case, exception handling
                     try {
                         var fromJson = angular.fromJson(item);
                         if (angular.isObject(fromJson)) {
@@ -58,7 +59,7 @@ var Triarc;
             };
             return LocalDataStorage;
         })();
-        _RemoteDataStore.LocalDataStorage = LocalDataStorage;
+        RemoteDataStore_1.LocalDataStorage = LocalDataStorage;
         var WebSqlDataStorage = (function () {
             function WebSqlDataStorage() {
             }
@@ -71,12 +72,12 @@ var Triarc;
             };
             return WebSqlDataStorage;
         })();
-        _RemoteDataStore.WebSqlDataStorage = WebSqlDataStorage;
+        RemoteDataStore_1.WebSqlDataStorage = WebSqlDataStorage;
         (function (DataStorageType) {
             DataStorageType[DataStorageType["LocalStorage"] = 0] = "LocalStorage";
             DataStorageType[DataStorageType["WebSql"] = 1] = "WebSql";
-        })(_RemoteDataStore.DataStorageType || (_RemoteDataStore.DataStorageType = {}));
-        var DataStorageType = _RemoteDataStore.DataStorageType;
+        })(RemoteDataStore_1.DataStorageType || (RemoteDataStore_1.DataStorageType = {}));
+        var DataStorageType = RemoteDataStore_1.DataStorageType;
         var RemoteDataStore = (function () {
             function RemoteDataStore($http, $q, $requestSender) {
                 this.$http = $http;
@@ -111,7 +112,7 @@ var Triarc;
                     }, function (e) { return e; });
                 }
                 else {
-                    var response = new Triarc.Data.DataResponse(storageItem.data, 0 /* Success */);
+                    var response = new Triarc.Data.DataResponse(storageItem.data, Triarc.Data.RequestStatus.Success);
                     defer.resolve(response);
                     // todo start triggering update
                     var reqPromise = this.$requestSender.requestValue(dataRequest);
@@ -153,7 +154,7 @@ var Triarc;
                 return dataRequest.url;
             };
             RemoteDataStore.prototype.setDataStorage = function (dataStorage) {
-                if (dataStorage == 0 /* LocalStorage */) {
+                if (dataStorage == DataStorageType.LocalStorage) {
                     this._dataStorage = new LocalDataStorage();
                 }
                 else {
@@ -198,7 +199,7 @@ var Triarc;
             RemoteDataStore.$inject = ["$http", "$q", "$requestSender"];
             return RemoteDataStore;
         })();
-        _RemoteDataStore.RemoteDataStore = RemoteDataStore;
+        RemoteDataStore_1.RemoteDataStore = RemoteDataStore;
         var tlRemoteDataStoreModule = angular.module("tlRemoteDataStore", ["tlDataServices"]);
         tlRemoteDataStoreModule.service(RemoteDataStore.serviceId, RemoteDataStore);
     })(RemoteDataStore = Triarc.RemoteDataStore || (Triarc.RemoteDataStore = {}));

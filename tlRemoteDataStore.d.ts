@@ -60,14 +60,14 @@ declare module Triarc.RemoteDataStore {
         static $inject: string[];
         private _dataStorage;
         private _transactions;
-        constructor($http: ng.IHttpService, $q: ng.IQService, $requestSender: any);
-        get<T>(dataRequest: Triarc.Data.DataRequest<T>, getOptions?: IGetOptions<T>): ng.IPromise<Triarc.Data.DataResponse<T>>;
+        constructor($http: angular.IHttpService, $q: angular.IQService, $requestSender: any);
+        get<T>(dataRequest: Triarc.Data.DataRequest<T>, getOptions?: IGetOptions<T>): angular.IPromise<Triarc.Data.DataResponse<T>>;
         getLocal<T>(dataRequest: Triarc.Data.DataRequest<T>): IStorageItem<T>;
         removeLocal<T>(dataRequest: Data.DataRequest<T>): any;
         getTransactions<T>(): IDataTransaction[];
         private getKey<T>(dataRequest);
         private setDataStorage(dataStorage);
-        enqueueRequest<TResult, TRequest extends Triarc.Data.DataRequest<any>>(request: (any) => ng.IPromise<TResult>, requestOptions: IRequestOptions<TRequest>): void;
+        enqueueRequest<TResult, TRequest extends Triarc.Data.DataRequest<any>>(request: (any) => angular.IPromise<TResult>, requestOptions: IRequestOptions<TRequest>): void;
         private updateStore<T>(dataRequest, reqPromise);
         private static getKey<T>(dataRequest);
         private storeData<T>(key, response);

@@ -1,10 +1,9 @@
 {
   "name": "cirrus-tlRemoteDataStore",
   "version": "0.0.3",
-  "authors": [
-    "Marco Bachmann <mb@triarc-labs.com>"
+  "main": [
+    "tlRemoteDataStore.js"
   ],
-  "main": "tlRemoteDataStore.js",
   "moduleType": [
     "globals"
   ],
@@ -21,6 +20,6 @@
   },
   "endpoint": "https://github.com/triarc/cirrus-tlRemoteDataStore.git",
   "dependencies": {
-    "cirrus-tlDataServices": "~0.0.18"
+    "cirrus-tlDataServices": "^0.0.18"
   }
 }
